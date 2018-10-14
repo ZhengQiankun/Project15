@@ -13,7 +13,7 @@ import logging
 from flask import Flask,session,current_app
 from flask_script import Manager
 from flask_migrate import Migrate,MigrateCommand
-from info import create_app,db
+from info import create_app,db,models #需要知道有modules文件存在即可
 
 # 传入标记，加载对应的配置环境
 app = create_app("develop")
