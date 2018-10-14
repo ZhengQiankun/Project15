@@ -7,7 +7,14 @@ from config import config_dict
 import redis
 from flask_session import Session
 from flask_wtf import CSRFProtect
-from info.modules.index import index_blue
+
+
+# 定义redis_store
+redis_store = None
+
+# 定义db
+db = SQLAlchemy()
+
 def create_app(config_name):
 
     # 应用程序初始化信息
@@ -23,9 +30,11 @@ def create_app(config_name):
     app.config.from_object(config)
 
     # 创建SQLAlchemy对象，关联app
-    db = SQLAlchemy(app)
+    # db = SQLAlchemy(app)
+    db.init_app(app)
 
     # 创建redis对象
+    global redis_store
     redis_store = redis.StrictRedis(host=config.REDIS_HOST,port=config.REDIS_PORT,decode_responses=True)
 
     # 初始化Session,读取app身上sesson的配置信息
@@ -35,6 +44,7 @@ def create_app(config_name):
     CSRFProtect(app)
 
     # 注册首页蓝图index_blue, 到app中
+    from info.modules.index import index_blue
     app.register_blueprint(index_blue)
 
     print(app.url_map)
