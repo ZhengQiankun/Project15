@@ -1,5 +1,6 @@
 from info import redis_store
 from . import index_blue
+from flask import render_template
 
 @index_blue.route('/')
 def helloworld():
@@ -24,4 +25,4 @@ def helloworld():
     # current_app.logger.warning("警告信息2")
     # current_app.logger.error("错误信息2")
 
-    return "helloworld"
+    return render_template("news/index.html")
