@@ -7,6 +7,7 @@ from config import config_dict
 import redis
 from flask_session import Session
 from flask_wtf import CSRFProtect
+from info.modules.index import index_blue
 def create_app(config_name):
 
     # 应用程序初始化信息
@@ -32,6 +33,12 @@ def create_app(config_name):
 
     # 保护app,使用CSRFProtect
     CSRFProtect(app)
+
+    # 注册首页蓝图index_blue, 到app中
+    app.register_blueprint(index_blue)
+
+    print(app.url_map)
+
 
     return app
 
