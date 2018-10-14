@@ -32,7 +32,7 @@ db = SQLAlchemy(app)
 @app.route('/')
 def helloworld():
 
-    return "helloworld100"
+    return "helloworld"
 
 if __name__ == "__main__":
     app.run(debug=True)
