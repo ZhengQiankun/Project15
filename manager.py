@@ -4,15 +4,16 @@
 2.redis配置
 3.session设置,为后续的登录保持做准备
 4.日志文件
-5.数据库迁移配置
+5.CSRFProtect配置，为了对‘POST’，‘PUT’，‘DISPATCH’，‘DELETE’做保护
+6.数据库迁移配置
 
 """""
 
-from flask import Flask
-from flask import session
+from flask import Flask,session
 from flask_sqlalchemy import SQLAlchemy
 import redis
 from flask_session import Session
+from flask_wtf import CSRFProtect
 
 app = Flask(__name__)
 
@@ -48,7 +49,10 @@ redis_store = redis.StrictRedis(host=Config.REDIS_HOST,port=Config.REDIS_PORT,de
 # 初始化Session,读取app身上sesson的配置信息
 Session(app)
 
-@app.route('/')
+# 保护app,使用CSRFProtect
+CSRFProtect(app)
+
+@app.route('/',methods=["POST"])
 def helloworld():
     # 测试redis存储数据
     redis_store.set("name","laowang")
