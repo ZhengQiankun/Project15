@@ -1,12 +1,9 @@
 from info import redis_store
-from info.utils.captcha.captcha import captcha
+
 from . import index_blue
 from flask import render_template,current_app
 
-@index_blue.route('/image_code')
-def image_code():
-    name,text,image_data = captcha.generate_captcha()
-    return image_data
+
 
 @index_blue.route('/')
 def helloworld():
