@@ -1,7 +1,7 @@
 from flask import session, jsonify
 
 from info import redis_store
-from info.models import User, News
+from info.models import User, News, Category
 from info.utils.response_code import RET
 
 from . import index_blue
@@ -34,13 +34,26 @@ def helloworld():
     for news in news_list:
         click_news_list.append(news.to_dict())
 
+    # 查询所有的分类信息
+    try:
+        categories = Category.query.all()
+    except Exception as e:
+        current_app.logger.error(e)
+        return jsonify(errno=RET.DBERR, errmsg="分类查询失败")
+
+    # 将分类的对象列表,转成字典列表
+    category_list = []
+    for category in categories:
+        category_list.append(category.to_dict())
 
     # 将用户信息转换成字典
     dict_data = {
         # 如果user存在,返回左边, 否则返回右边
         "user_info" : user.to_dict() if user else "",
 
-        "click_news_list":click_news_list}
+        "click_news_list":click_news_list,
+        "categories": category_list
+    }
 
     return render_template("news/index.html",data = dict_data)
 #处理网站logo,浏览器在运行的时候，自动发送一个get请求，向/favicon.ico地址
