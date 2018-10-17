@@ -1,5 +1,6 @@
 import random
 import re
+from datetime import datetime
 from flask import current_app
 from flask import json
 from flask import request, jsonify,make_response
@@ -74,6 +75,9 @@ def login():
     session["user_id"] = user.id
     session["nick_name"] = user.nick_name
     session["mobile"] = user.mobile
+
+    # 6.1记录用户最后一次的登陆时间
+    user.last_login = datetime.now()
 
     # 7.返回响应
     return jsonify(errno=RET.OK,errmsg="用户登录成功")
