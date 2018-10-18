@@ -68,7 +68,7 @@ def news_list():
 
 
 @index_blue.route('/')
-def helloworld():
+def show_index():
     # 获取用户编号，从session
     user_id = session.get("user_id")
 

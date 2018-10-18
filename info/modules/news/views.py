@@ -38,20 +38,21 @@ def news_detail(news_id):
 
     #获取用户数据
     #获取用户的编号,从session
-    # user_id = session.get("user_id")
-    #
-    # #判断用户是否存在
-    # user = None
-    # if user_id:
-    #     try:
-    #         user = User.query.get(user_id)
-    #     except Exception as e:
-    #         current_app.logger.error(e)
+    user_id = session.get("user_id")
+
+    #判断用户是否存在
+    user = None
+    if user_id:
+        try:
+            user = User.query.get(user_id)
+        except Exception as e:
+            current_app.logger.error(e)
 
     # 携带数据渲染页面
     data = {
         "news":news.to_dict(),
-        "click_news_list":click_news_list
+        "click_news_list":click_news_list,
+        "user_info": user.to_dict() if user else "",
     }
 
     return render_template("news/detail.html",data=data)
