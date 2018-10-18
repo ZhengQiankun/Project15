@@ -1,5 +1,5 @@
 from info.models import News, User
-from info.utils.common import user_login_data
+from info.utils.common import user_login_data #
 from info.utils.response_code import RET
 from . import news_blue
 from flask import render_template, current_app, jsonify, abort, session, g
@@ -11,7 +11,7 @@ from flask import render_template, current_app, jsonify, abort, session, g
 # 请求参数:news_id
 # 返回值: detail.html页面, 用户data字典数据
 @news_blue.route('/<int:news_id>')
-@user_login_data
+@user_login_data #
 def news_detail(news_id):
 
     # 根据传入的新闻编号,获取新闻对象
@@ -52,7 +52,7 @@ def news_detail(news_id):
     data = {
         "news":news.to_dict(),
         "click_news_list":click_news_list,
-        "user_info": user.to_dict() if user else "",
+        "user_info": g.user.to_dict() if g.user else "",
     }
 
     return render_template("news/detail.html",data=data)

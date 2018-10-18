@@ -3,10 +3,11 @@ from flask import session, jsonify
 
 from info import redis_store
 from info.models import User, News, Category
+from info.utils.common import user_login_data
 from info.utils.response_code import RET
 
 from . import index_blue
-from flask import render_template,current_app,request
+from flask import render_template,current_app,request,g
 
 
 
@@ -16,6 +17,7 @@ from flask import render_template,current_app,request
 # 请求参数: cid,page,per_page
 # 返回值: data数据
 @index_blue.route('/newslist')
+@user_login_data
 def news_list():
     """
     1. 获取参数
@@ -68,6 +70,7 @@ def news_list():
 
 
 @index_blue.route('/')
+@user_login_data
 def show_index():
     # 获取用户编号，从session
     user_id = session.get("user_id")
@@ -107,7 +110,7 @@ def show_index():
     # 将用户信息转换成字典
     dict_data = {
         # 如果user存在,返回左边, 否则返回右边
-        "user_info" : user.to_dict() if user else "",
+        "user_info" : g.user.to_dict() if g.user else "",
 
         "click_news_list":click_news_list,
         "categories": category_list
