@@ -1,3 +1,32 @@
+{% extends 'news/base.html' %}
+{# index页面重写4部分 #}
+
+{# 标题部分 #}
+{% block titleBlock %}
+    首页-新经资讯
+{% endblock %}
+
+{# script部分 #}
+{% block scriptBlock %}
+    <script type="text/javascript" src="../../static/news/js/index.js"></script>
+{% endblock %}
+
+{# 分类部分 #}
+{% block headerBlock %}
+    {# 遍历分类信息 #}
+    {% for categorty in data.categories %}
+        <li class="{% if categorty.id == 1 %} active {% endif %}" data-cid="{{ categorty.id }}"><a href="javascript:;">{{ categorty.name }}</a></li>
+    {% endfor %}
+{% endblock %}
+
+{# 正文部分 #}
+{% block contentBlock %}
+    <ul class="list_con fl">
+
+    </ul>
+{% endblock %}
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,16 +44,16 @@
             <a href="#" class="logo fl"><img src="../../static/news/images/logo.png" alt="logo"></a>
             <ul class="menu fl">
 
-                {# 遍历分类信息 #}
+                 遍历分类信息
                 {% for categorty in data.categories %}
                     <li class="{% if categorty.id == 1 %} active {% endif %}" data-cid="{{ categorty.id }}"><a href="javascript:;">{{ categorty.name }}</a></li>
                 {% endfor %}
-{#                <li class="active" data-cid="1"><a href="javascript:;">最新</a></li>#}
-{#                <li data-cid="2"><a href="javascript:;">股市</a></li>#}
-{#                <li data-cid="3"><a href="javascript:;">债市</a></li>#}
-{#                <li data-cid="4"><a href="javascript:;">商品</a></li>#}
-{#                <li data-cid="5"><a href="javascript:;">外汇</a></li>#}
-{#                <li data-cid="6"><a href="javascript:;">公司</a></li>#}
+                <li class="active" data-cid="1"><a href="javascript:;">最新</a></li>
+                <li data-cid="2"><a href="javascript:;">股市</a></li>
+                <li data-cid="3"><a href="javascript:;">债市</a></li>
+                <li data-cid="4"><a href="javascript:;">商品</a></li>
+                <li data-cid="5"><a href="javascript:;">外汇</a></li>
+                <li data-cid="6"><a href="javascript:;">公司</a></li>
             </ul>
 
 
@@ -50,7 +79,7 @@
 
         </div>
     </div>
-    
+
     <div class="conter_con">
         <ul class="list_con fl">
             <li>
@@ -105,21 +134,21 @@
                 <h3>点击排行</h3>
             </div>
             <ul class="rank_list">
-                {# 遍历获取新闻列表 #}
+                 遍历获取新闻列表
                 {% for news in data.click_news_list %}
                     <li><span class="{{ loop.index | index_class }} "> {{ loop.index }}</span><a href="#">{{ news.title }}</a></li>
                 {% endfor %}
 
-{#                <li><span class="first">1</span><a href="#">势如破竹！人民币再度连闯四道关口 在岸、离岸双双升破6.42</a></li>#}
-{#                <li><span class="second">2</span><a href="#">凛冬已至，还有多少银行人在假装干银行</a></li>#}
-{#                <li><span class="third">3</span><a href="#">人民日报：部分城市楼市放松限制引关注，楼市调控不会“拉抽屉”</a></li>#}
-{#                <li><span>4</span><a href="#">势如破竹！人民币再度连闯四道关口 在岸、离岸双双升破6.42</a></li>#}
-{#                <li><span>5</span><a href="#">凛冬已至，还有多少银行人在假装干银行</a></li>#}
-{#                <li><span>6</span><a href="#">人民日报：部分城市楼市放松限制引关注，楼市调控不会“拉抽屉”</a></li>#}
+                <li><span class="first">1</span><a href="#">势如破竹！人民币再度连闯四道关口 在岸、离岸双双升破6.42</a></li>
+                <li><span class="second">2</span><a href="#">凛冬已至，还有多少银行人在假装干银行</a></li>
+                <li><span class="third">3</span><a href="#">人民日报：部分城市楼市放松限制引关注，楼市调控不会“拉抽屉”</a></li>
+                <li><span>4</span><a href="#">势如破竹！人民币再度连闯四道关口 在岸、离岸双双升破6.42</a></li>
+                <li><span>5</span><a href="#">凛冬已至，还有多少银行人在假装干银行</a></li>
+                <li><span>6</span><a href="#">人民日报：部分城市楼市放松限制引关注，楼市调控不会“拉抽屉”</a></li>
             </ul>
         </div>
     </div>
-    <div class="footer">        
+    <div class="footer">
         <div class="footer_links">
             <a href="">关于我们</a>
             <span>|</span>
@@ -134,7 +163,7 @@
 电话：010-****888    京ICP备*******8号
         </p>
     </div>
-    
+
     <!-- 登录表单 -->
     <form class="login_form_con">
         <div class="login_form">
@@ -174,7 +203,7 @@
                 <input type="text" name="code_pwd" id="imagecode" class="code_pwd">
                 <div class="input_tip">图形验证码</div>
                 <img src="../../static/news/images/pic_code.png" class="get_pic_code" onclick="generateImageCode()">
-{#                <img src="/image_code" class="get_pic_code" onclick="generateImageCode()">#}
+                <img src="/image_code" class="get_pic_code" onclick="generateImageCode()">
                 <div id="register-image-code-err" class="error_tip">图形码不能为空</div>
             </div>
             <div class="form_group">
