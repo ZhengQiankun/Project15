@@ -1,4 +1,4 @@
-from info.models import News, User
+from info.models import News, User, Comment
 from info.utils.common import user_login_data #
 from info.utils.response_code import RET
 from . import news_blue
@@ -48,11 +48,18 @@ def news_detail(news_id):
         except Exception as e:
             current_app.logger.error(e)
 
+    is_collected =  False
+    if g.user and news in g.user.collection_news:
+        is_collected = True
+
+
     # 携带数据渲染页面
     data = {
         "news":news.to_dict(),
         "click_news_list":click_news_list,
         "user_info": g.user.to_dict() if g.user else "",
+        "is_collected": is_collected
+
     }
 
     return render_template("news/detail.html",data=data)
