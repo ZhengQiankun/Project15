@@ -187,13 +187,27 @@ def news_detail(news_id):
     if g.user and news in g.user.collection_news:
         is_collected = True
 
+    #查询所有的评论
+    try:
+       comments =  Comment.query.filter(Comment.news_id == news_id).order_by(Comment.create_time.desc()).all()
+    except Exception as e:
+        current_app.logger.error(e)
+        return jsonify(errno=RET.DBERR,errmsg="获取评论失败")
+
+    #将评论对象列表转成,字典列表
+    comments_list = []
+    for comment in comments:
+        comments_list.append(comment.to_dict())
+
+
 
     # 携带数据渲染页面
     data = {
         "news":news.to_dict(),
         "click_news_list":click_news_list,
         "user_info": g.user.to_dict() if g.user else "",
-        "is_collected": is_collected
+        "is_collected": is_collected,
+        "comments": comments_list
 
     }
 
