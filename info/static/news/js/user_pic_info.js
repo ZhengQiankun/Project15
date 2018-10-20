@@ -10,7 +10,7 @@ $(function () {
 
         //TODO 上传头像
         // 上传头像,表单提交和其他提交方式不一样
-        /*
+
         $(this).ajaxSubmit({
             url: "/user/pic_info",
             type: "POST",
@@ -19,14 +19,17 @@ $(function () {
             },
             success: function (resp) {
                 if (resp.errno == "0") {
-                    $(".now_user_pic").attr("src", resp.data.avatar_url)
-                    $(".user_center_pic>img", parent.document).attr("src", resp.data.avatar_url)
-                    $(".user_login>img", parent.document).attr("src", resp.data.avatar_url)
+                    $(".now_user_pic").attr("src", resp.data.avatar_url);
+                    $(".user_center_pic>img", parent.document).attr("src", resp.data.avatar_url);
+                    $(".user_login>img", parent.document).attr("src", resp.data.avatar_url);
+                    // window.location.reload()
+                    // window.location = "/user/info"
+
                 }else {
                     alert(resp.errmsg)
                 }
             }
         })
-        */
+
     })
 })

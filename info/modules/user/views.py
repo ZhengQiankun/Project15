@@ -1,7 +1,53 @@
+from info import constants
 from info.utils.common import user_login_data
+from info.utils.image_storage import image_storage
 from info.utils.response_code import RET
 from . import user_blue
 from flask import render_template, g, redirect, request, jsonify, current_app
+
+
+
+#功能描述: 图片上传
+# 请求路径: /user/pic_info
+# 请求方式:GET,POST
+# 请求参数:无, POST有参数,avatar
+# 返回值:GET请求: user_pci_info.html页面,data字典数据, POST请求: errno, errmsg,avatar_url
+@user_blue.route('/pic_info', methods=['GET', 'POST'])
+@user_login_data
+def pic_info():
+
+    #1.如果是GET,直接渲染页面
+    if request.method == "GET":
+        return render_template("news/user_pic_info.html",user=g.user.to_dict())
+
+    # - 1.获取参数
+    avatar = request.files.get("avatar")
+
+    # - 2.校验参数
+    if not avatar:
+        return jsonify(errno=RET.PARAMERR,errmsg="参数不全")
+
+    # - 3.调用工具类方法,上传图片
+    try:
+        image_name = image_storage(avatar.read())
+    except Exception as e:
+        current_app.logger.error(e)
+        return jsonify(errno=RET.THIRDERR,errmsg="七牛云上传失败")
+
+    # - 4.判断图片是否上传成功
+    if not image_name:
+        return jsonify(errno=RET.NODATA,errmsg="图片上传失败")
+
+    # - 5.修改用户图片
+    g.user.avatar_url = image_name
+
+    # - 6.返回响应,携带图片地址
+    data = {
+        "avartar_url":constants.QINIU_DOMIN_PREFIX + image_name
+    }
+    return jsonify(errno=RET.OK,errmsg="上传成功",data=data)
+
+
 
 
 # 功能描述: 获取基本资料
@@ -42,6 +88,8 @@ def base_info():
 
     # - 2.4.返回响应
     return jsonify(errno=RET.OK,errmsg="修改成功")
+
+
 
 #展示个人中心页面
 # 请求路径: /user/info
