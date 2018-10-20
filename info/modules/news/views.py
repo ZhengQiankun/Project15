@@ -194,12 +194,26 @@ def news_detail(news_id):
         current_app.logger.error(e)
         return jsonify(errno=RET.DBERR,errmsg="获取评论失败")
 
+    # 获取用户的所有,点赞对象
+    comment_likes = g.user.comment_likes
+
+    # 获取用户所有,点赞过的评论编号
+    comment_ids = []
+    for comment_like in comment_likes:
+        comment_ids.append(comment_like.comment_id)
+
     #将评论对象列表转成,字典列表
     comments_list = []
     for comment in comments:
-        comments_list.append(comment.to_dict())
+        com_dict = comment.to_dict()
+        com_dict["is_like"] = False
 
+        # 判断当前用户,是否有对该评论点过赞
+        # if g.user and 当前评论编号,在用户点赞过的评论编号里面
+        if g.user and comment.id in comment_ids:
+            com_dict["is_like"] = True
 
+        comments_list.append(com_dict)
 
     # 携带数据渲染页面
     data = {
