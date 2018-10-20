@@ -1,8 +1,8 @@
 from qiniu import Auth, put_file, etag,put_data
 import qiniu.config
 #需要填写你的 Access Key 和 Secret Key
-access_key = 'v3n5FPnRvLujRroKe3X9FxjMSgtWCmMWBeharusu'
-secret_key = 'd3uJUlaQ9iKh0b5XkhU-Tlx5hjrDiWDDeHA4xotw'
+access_key = 'QgZkBoYcD5k55wN3Xdl7FBTHCRICyR-9uQNylgAU'
+secret_key = 'aBhID5rZmjtT4fU8RLYHz2sge06eACrZTQgP_eyD'
 
 def image_storage(image_data):
     #构建鉴权对象
