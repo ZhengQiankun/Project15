@@ -6050,3 +6050,11 @@ INFO _internal.py:88  * Detected change in '/home/python/Desktop/day010/Project/
 INFO _internal.py:88  * Restarting with stat
 WARNING _internal.py:88  * Debugger is active!
 INFO _internal.py:88  * Debugger PIN: 295-101-528
+INFO _internal.py:88  * Detected change in '/home/python/Desktop/day010/Project/Project15/info/modules/news/views.py', reloading
+INFO _internal.py:88  * Restarting with stat
+WARNING _internal.py:88  * Debugger is active!
+INFO _internal.py:88  * Debugger PIN: 295-101-528
+INFO _internal.py:88  * Detected change in '/home/python/Desktop/day010/Project/Project15/info/modules/news/views.py', reloading
+INFO _internal.py:88  * Restarting with stat
+WARNING _internal.py:88  * Debugger is active!
+INFO _internal.py:88  * Debugger PIN: 295-101-528
